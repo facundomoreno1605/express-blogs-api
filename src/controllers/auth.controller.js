@@ -13,7 +13,11 @@ const register = catchAsync(async (req, res) => {
 const login = catchAsync(async (req, res) => {
   const { email, password } = req.body;
 
-  const user = await AuthService.login({ email, password });
+  const user = await AuthService.login({
+    email,
+    password,
+    ipAddr: req.connection.remoteAddress,
+  });
   const token = await TokenService.generateAuthTokens(user.id);
 
   return res.status(httpStatus.OK).send({ user, token });
