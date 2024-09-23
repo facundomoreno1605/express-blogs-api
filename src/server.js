@@ -13,6 +13,7 @@ const {
 const nonExistingRoutesHandler = require("./middlewares/nonExistingRoutes.middleware");
 const { xss } = require("express-xss-sanitizer");
 const helmet = require("helmet");
+const mongoSanitize = require("express-mongo-sanitize");
 
 //@Configs
 const morgan = require("./configs/morgan");
@@ -34,6 +35,7 @@ passport.use("jwt", jwtStrategy);
 // @Security
 app.use(xss());
 app.use(helmet({ contentSecurityPolicy: configs.cspOptions }));
+app.use(mongoSanitize());
 
 // @Routes
 app.use("/api", BlogRoutes);
