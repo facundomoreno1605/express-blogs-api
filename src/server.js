@@ -11,6 +11,7 @@ const {
   errorHandler,
 } = require("./middlewares/error.middleware");
 const nonExistingRoutesHandler = require("./middlewares/nonExistingRoutes.middleware");
+const { xss } = require("express-xss-sanitizer");
 
 //@Configs
 const morgan = require("./configs/morgan");
@@ -27,6 +28,9 @@ app.use(express.json());
 // @Passport
 app.use(passport.initialize());
 passport.use("jwt", jwtStrategy);
+
+// @Security
+app.use(xss());
 
 // @Routes
 app.use("/api", BlogRoutes);

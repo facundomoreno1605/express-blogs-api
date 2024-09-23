@@ -103,3 +103,10 @@ POST /api/auth/refresh-token 400 2.352 ms PostmanRuntime/7.42.0 Sat, 21 Sep 2024
 POST /api/auth/refresh-token 200 10.585 ms PostmanRuntime/7.42.0 Sat, 21 Sep 2024 15:35:06 GMT
 GET /api/blogs 200 7.623 ms PostmanRuntime/7.42.0 Sat, 21 Sep 2024 15:35:09 GMT
 POST /api/blogs 201 5.962 ms PostmanRuntime/7.42.0 Sat, 21 Sep 2024 15:35:11 GMT
+POST /api/auth/login 429 16.772 ms PostmanRuntime/7.42.0 Mon, 23 Sep 2024 16:50:27 GMT - error-message: Too many requests
+POST /api/auth/refresh-token 401 12.860 ms PostmanRuntime/7.42.0 Mon, 23 Sep 2024 16:50:29 GMT - error-message: Need authentication
+POST /api/auth/login 429 6.412 ms PostmanRuntime/7.42.0 Mon, 23 Sep 2024 16:50:31 GMT - error-message: Too many requests
+POST /api/auth/register 400 7.691 ms PostmanRuntime/7.42.0 Mon, 23 Sep 2024 16:50:38 GMT - error-message: Email is already taken
+POST /api/auth/register 201 57.190 ms PostmanRuntime/7.42.0 Mon, 23 Sep 2024 16:50:44 GMT
+POST /api/auth/login 200 31.330 ms PostmanRuntime/7.42.0 Mon, 23 Sep 2024 16:50:51 GMT
+POST /api/blogs 201 9.455 ms PostmanRuntime/7.42.0 Mon, 23 Sep 2024 16:51:02 GMT
