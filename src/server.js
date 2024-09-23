@@ -33,7 +33,7 @@ passport.use("jwt", jwtStrategy);
 
 // @Security
 app.use(xss());
-app.use(helmet.contentSecurityPolicy(configs.cspOptions));
+app.use(helmet({ contentSecurityPolicy: configs.cspOptions }));
 
 // @Routes
 app.use("/api", BlogRoutes);
