@@ -6,6 +6,7 @@ const { tokenTypes } = require("../configs/tokens");
 const { RateLimiterMongo } = require("rate-limiter-flexible");
 const mongoose = require("mongoose");
 const configs = require("../configs/configs");
+const logger = require("../configs/logger");
 
 const login = async ({ email, password, ipAddr }) => {
   const rateLimiterOptions = {
@@ -69,6 +70,8 @@ const refreshAuthToken = async (refreshToken) => {
 
     return TokenService.generateAuthTokens(user.id);
   } catch (error) {
+    logger.error(error);
+
     throw new ApiError({
       statusCode: httpStatus.UNAUTHORIZED,
       message: "Need authentication",

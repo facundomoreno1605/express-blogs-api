@@ -14,6 +14,7 @@ const nonExistingRoutesHandler = require("./middlewares/nonExistingRoutes.middle
 const { xss } = require("express-xss-sanitizer");
 const helmet = require("helmet");
 const mongoSanitize = require("express-mongo-sanitize");
+const cors = require("cors");
 
 //@Configs
 const morgan = require("./configs/morgan");
@@ -36,6 +37,14 @@ passport.use("jwt", jwtStrategy);
 app.use(xss());
 app.use(helmet({ contentSecurityPolicy: configs.cspOptions }));
 app.use(mongoSanitize());
+
+if (configs.env === "production") {
+  app.use(cors({ origin: "url" }));
+  app.options("*", cors({ origin: "url" }));
+} else {
+  app.use(cors());
+  app.options("*", cors());
+}
 
 // @Routes
 app.use("/api", BlogRoutes);
