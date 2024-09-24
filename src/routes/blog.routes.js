@@ -1,17 +1,17 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 
-const { blogValidations } = require("../validations");
-const validateMiddleware = require("../middlewares/validate.middleware");
-const authMiddleware = require("../middlewares/auth.middleware");
-const { BlogController } = require("../controllers");
+const { blogValidations } = require('../validations');
+const validateMiddleware = require('../middlewares/validate.middleware');
+const authMiddleware = require('../middlewares/auth.middleware');
+const { BlogController } = require('../controllers');
 
 router.post(
-  "/blogs",
+  '/blogs',
   authMiddleware,
   validateMiddleware(blogValidations.createBlogSchema),
-  BlogController.createBlog
+  BlogController.createBlog,
 );
-router.get("/blogs", authMiddleware, BlogController.getBlogs);
+router.get('/blogs', authMiddleware, BlogController.getBlogs);
 
 module.exports = router;

@@ -1,13 +1,13 @@
-const { RateLimiterMongo } = require("rate-limiter-flexible");
-const mongoose = require("mongoose");
-const httpStatus = require("http-status");
-const ApiError = require("../utils/ApiError.util");
-const configs = require("../configs/configs");
+const { RateLimiterMongo } = require('rate-limiter-flexible');
+const mongoose = require('mongoose');
+const httpStatus = require('http-status');
+const ApiError = require('../utils/ApiError.util');
+const configs = require('../configs/configs');
 
 const rateLimiterOptions = {
   storeClient: mongoose.connection,
   blockDuration: 60 * 60 * 24,
-  dbName: "blog-api",
+  dbName: 'blog-api',
 };
 
 const emailIpBruteLimiter = new RateLimiterMongo({
@@ -58,13 +58,13 @@ const authLimiterMiddleware = async (req, res, next) => {
   }
 
   if (retrySeconds > 0) {
-    res.set("Retry-After", String(retrySeconds));
+    res.set('Retry-After', String(retrySeconds));
 
     return next(
       new ApiError({
         statusCode: httpStatus.TOO_MANY_REQUESTS,
-        message: "Too many requests",
-      })
+        message: 'Too many requests',
+      }),
     );
   }
   next();

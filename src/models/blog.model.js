@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const BlogSchema = mongoose.Schema({
   title: {
@@ -11,6 +11,6 @@ const BlogSchema = mongoose.Schema({
   },
 });
 
-const BlogModel = mongoose.model("blog", BlogSchema);
+const BlogModel = mongoose.model('blog', BlogSchema);
 
 module.exports = BlogModel;

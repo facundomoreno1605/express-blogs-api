@@ -1,7 +1,7 @@
-const mongoose = require("mongoose");
-const validator = require("validator");
-const bcrypt = require("bcryptjs");
-const toJson = require("@meanie/mongoose-to-json");
+const mongoose = require('mongoose');
+const validator = require('validator');
+const bcrypt = require('bcryptjs');
+const toJson = require('@meanie/mongoose-to-json');
 
 const userSchema = mongoose.Schema(
   {
@@ -18,7 +18,7 @@ const userSchema = mongoose.Schema(
       lowercase: true,
       validate(value) {
         if (!validator.isEmail(value)) {
-          throw new Error("Invalid email");
+          throw new Error('Invalid email');
         }
       },
     },
@@ -31,7 +31,7 @@ const userSchema = mongoose.Schema(
       validate(value) {
         if (!validator.isStrongPassword(value)) {
           throw new Error(
-            "Password should contain at least one uppercase letter, one lowercase letter, one number, and one special character"
+            'Password should contain at least one uppercase letter, one lowercase letter, one number, and one special character',
           );
         }
       },
@@ -39,7 +39,7 @@ const userSchema = mongoose.Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 userSchema.statics.isEmailTaken = async function (email) {
@@ -48,9 +48,9 @@ userSchema.statics.isEmailTaken = async function (email) {
   return !!user;
 };
 
-userSchema.pre("save", async function (next) {
+userSchema.pre('save', async function (next) {
   const user = this;
-  if (user.isModified("password")) {
+  if (user.isModified('password')) {
     user.password = await bcrypt.hash(user.password, 8);
   }
   next();
@@ -64,6 +64,6 @@ userSchema.methods.isPasswordMatch = async function (password) {
 
 userSchema.plugin(toJson);
 
-const UserModel = mongoose.model("User", userSchema);
+const UserModel = mongoose.model('User', userSchema);
 
 module.exports = UserModel;

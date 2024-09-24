@@ -1,8 +1,8 @@
-const jwt = require("jsonwebtoken");
-const dayjs = require("dayjs");
-const configs = require("./../configs/configs");
-const { tokenTypes } = require("./../configs/tokens");
-const { TokenModel } = require("./../models");
+const jwt = require('jsonwebtoken');
+const dayjs = require('dayjs');
+const configs = require('./../configs/configs');
+const { tokenTypes } = require('./../configs/tokens');
+const { TokenModel } = require('./../models');
 
 const generateToken = ({
   userId,
@@ -49,7 +49,7 @@ const verifyToken = async (token, type) => {
   });
 
   if (!tokenDoc) {
-    throw new Error("Token not found");
+    throw new Error('Token not found');
   }
 
   return tokenDoc;
@@ -58,7 +58,7 @@ const verifyToken = async (token, type) => {
 const generateAuthTokens = async (userId) => {
   const accessTokenExpires = dayjs().add(
     configs.jwt.accessExpirationMinutes,
-    "minutes"
+    'minutes',
   );
   const accessToken = generateToken({
     userId,
@@ -68,7 +68,7 @@ const generateAuthTokens = async (userId) => {
 
   const refreshTokenExpires = dayjs().add(
     configs.jwt.refreshExpirationDays,
-    "days"
+    'days',
   );
   const refreshToken = generateToken({
     userId,

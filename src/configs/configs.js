@@ -1,5 +1,5 @@
-const { envValidations } = require("../validations");
-require("dotenv").config();
+const { envValidations } = require('../validations');
+require('dotenv').config();
 
 const { value: envVars, error } = envValidations.validate(process.env);
 
@@ -25,8 +25,8 @@ module.exports = {
     directives: {
       defaultSrc: ["'self'"],
       scriptSrc: ["'self'", "'unsafe-inline'"],
-      styleSrc: ["'self'", "unsafe-inline"],
-      fontSrc: ["'self'", "unsafe-inline"],
+      styleSrc: ["'self'", 'unsafe-inline'],
+      fontSrc: ["'self'", 'unsafe-inline'],
     },
     reportOnly: true,
   },

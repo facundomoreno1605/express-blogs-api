@@ -1,4 +1,4 @@
-const joi = require("joi");
+const joi = require('joi');
 
 const envVarsSchema = joi
   .object({
@@ -6,8 +6,8 @@ const envVarsSchema = joi
     PORT: joi.number().positive().default(3000),
     NODE_ENV: joi
       .string()
-      .valid("development", "production", "test")
-      .default("development"),
+      .valid('development', 'production', 'test')
+      .default('development'),
   })
   .unknown(true);
 

@@ -1,6 +1,6 @@
-const catchAsync = require("./../utils/catchAsync.util");
-const httpStatus = require("http-status");
-const { UserService, TokenService, AuthService } = require("./../services");
+const catchAsync = require('./../utils/catchAsync.util');
+const httpStatus = require('http-status');
+const { UserService, TokenService, AuthService } = require('./../services');
 
 const register = catchAsync(async (req, res) => {
   const user = await UserService.createUser(req.body);
