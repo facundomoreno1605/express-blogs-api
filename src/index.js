@@ -1,26 +1,10 @@
-const mongoose = require('mongoose');
+const express = require('express');
 const configs = require('./configs/configs');
-const app = require('./server');
-const http = require('http');
+const loader = require('./loaders');
 const logger = require('./configs/logger');
+const http = require('http');
 
-mongoose
-  .connect(configs.dbConnectionUri)
-  .then(() => {
-    logger.info('Connected to the database');
-  })
-  .catch((error) => {
-    logger.error('Cannot connect to the database', error);
-    process.exit();
-  });
-
-const port = configs.port;
-const httpServer = http.createServer(app);
-const server = httpServer.listen(port, () => {
-  logger.info(`Server is listening on port ${port}`);
-});
-
-const exitHandler = () => {
+const exitHandler = (server) => {
   if (server) {
     server.close(() => {
       logger.info('Server closed');
@@ -31,14 +15,30 @@ const exitHandler = () => {
   }
 };
 
-const unExpectedErrorHandler = (error) => {
-  logger.error(error);
-  exitHandler();
+const unExpectedErrorHandler = (server) => {
+  return function (error) {
+    logger.error(error);
+    exitHandler(server);
+  };
 };
 
-process.on('uncaughtException', unExpectedErrorHandler);
-process.on('unhandledRejection', unExpectedErrorHandler);
-process.on('SIGTERM', () => {
-  logger.info('SIGTERM received');
-  exitHandler();
-});
+const startServer = async () => {
+  const app = express();
+  await loader(app);
+
+  const httpServer = http.createServer(app);
+  const server = httpServer.listen(configs.port, () => {
+    logger.info(`server listening on port ${configs.port}`);
+  });
+
+  process.on('uncaughtException', unExpectedErrorHandler(server));
+  process.on('unhandledRejection', unExpectedErrorHandler(server));
+  process.on('SIGTERM', () => {
+    logger.info('SIGTERM received');
+    if (server) {
+      server.close();
+    }
+  });
+};
+
+startServer();
