@@ -1,6 +1,7 @@
 const { UserModel } = require('../models');
 const ApiError = require('../utils/ApiError.util');
 const httpStatus = require('http-status');
+const EventEmitter = require('../utils/EventEmitter.util');
 
 const createUser = async ({ name, email, password }) => {
   if (await UserModel.isEmailTaken(email)) {
@@ -11,6 +12,8 @@ const createUser = async ({ name, email, password }) => {
   }
 
   const user = await UserModel.create({ name, email, password });
+
+  EventEmitter.emit('signup', user);
 
   return user;
 };
